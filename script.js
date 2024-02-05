@@ -1,3 +1,8 @@
+// set variables
+let firstNum = ;
+let secondNum = ;
+let operator = ;
+
 // basic calculator functions
 function add (x,y) {
     return x+y;
