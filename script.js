@@ -36,18 +36,16 @@ function multiply(x, y) {
 }
 
 function divide(x, y) {
-    return x / y;
+    if (y == 0) {
+        return "nO dIvIsIoN bY zErO";
+    }
+    else {
+        return x / y;
+    }
 }
 
 // create operate function
 function operate(firstNum, operator, secondNum) {
-
-    // test
-    // console.log(`firstNum = ${firstNum} : ${typeof (firstNum)}`);
-    // console.log(`secondNum = ${secondNum} : ${typeof (secondNum)}`);
-    // console.log(`operator = ${operator} : ${typeof (operator)}`);
-    // console.log(`firstNum, operator, secondNum = ${firstNum + operator + secondNum}`);
-    // console.log(`operator=="+" is ${operator == "+"}`);
 
     if (operator == addition.textContent) {
         return add(firstNum, secondNum);
@@ -75,70 +73,54 @@ input.addEventListener('click', function (e) {
     let isOperator = (element.id == "addition" || element.id == "subtraction" || element.id == "multiplication" || element.id == "division");
     let isEquals = (element.id == "equals");
     let isClear = (element.id == "clear");
-    let checker = (result.textContent.includes(addition.textContent) || result.textContent.includes(subtraction.textContent) || 
-    result.textContent.includes(multiplication.textContent) || result.textContent.includes(division.textContent));
-    console.log(`checker is ${checker}`);
-
-    // console.log(element.id, typeof(element.id));
-    // console.log(`isNumber is ${isNumber}`);
-    // console.log(`isDecimal is ${isDecimal}`);
-    // console.log(`isOperator is ${isOperator}`);
-    // console.log(`isEquals is ${isEquals}`);
-    // console.log(`isClear is ${isClear}`);
+    let checker = (result.textContent.includes(addition.textContent) || result.textContent.includes(subtraction.textContent) ||
+        result.textContent.includes(multiplication.textContent) || result.textContent.includes(division.textContent));
 
     let value = element.textContent;
 
-    console.log(`${value} was clicked`);
-
-    // console.log(value);
-
-    console.log(`result.textContent is ${result.textContent}\nresult.textContent.slice(-1) is ${result.textContent.slice(-1)}`);
-
     if ((isNumber || isDecimal) && result.textContent == "0") {
-        console.log(`(isNumber || isDecimal) : ${(isNumber || isDecimal)}\nresult.textContent == '0' : ${result.textContent == "0"}`);
-        console.log(`((isNumber || isDecimal) && result.textContent == "0") : ${((isNumber || isDecimal) && result.textContent == "0")}`);
         result.textContent = value;
     }
     else if ((isNumber || isDecimal) && !checker) {
-        console.log(`(isNumber || isDecimal) : ${(isNumber || isDecimal)}\n(!checker : ${(!checker)})`);
-        console.log(`((isNumber || isDecimal) && (!checker)) : ${((isNumber || isDecimal) && (!checker))}`);
         result.textContent += value;
     }
     else if ((isNumber || isDecimal) && (checker)) {
-        console.log(`(isNumber || isDecimal) : ${(isNumber || isDecimal)}\n(checker : ${(checker)})`);
-        console.log(`((isNumber || isDecimal) && (checker)) : ${((isNumber || isDecimal) && (checker))}`);
         result.textContent += value;
     }
-
-    if (isOperator && (!checker)) {
-        console.log(`isOperator : ${isOperator}\n(!checker : ${(!checker)})`);
-        console.log(`(isOperator && (!checker)) : ${(isOperator && (!checker))}`);
+    else if (isOperator && (!checker)) {
         operator = value;
         result.textContent += value;
+    }
+    else if (isOperator && (checker) && result.textContent.slice(-1) == operator) {
+        operator = value;
+        result.textContent = result.textContent.replace(/.$/, value);
     }
     else if (isOperator && (checker)) {
-        console.log(`isOperator : ${isOperator}\n(checker : ${(checker)})`);
-        console.log(`(isOperator && (checker)) : ${(isOperator && (checker))}`);
-        operator = value;
-        result.textContent = result.textContent.replace(/.$/,value);
-    }
-
-
-    if (isEquals) {
 
         let secondNum = Number(result.textContent.substring((result.textContent.indexOf(operator) + 1)));
         let firstNum = Number(result.textContent.substring(0, result.textContent.indexOf(operator)));
 
-        console.log(`firstNum is ${firstNum}`);
-        console.log(`secondNum is ${secondNum}`);
-        console.log(`operator is ${operator}`);
-
-
-        result.textContent = parseFloat(Number(operate(firstNum, operator, secondNum).toFixed(5)));
+        if (typeof (operate(firstNum, operator, secondNum)) == "number") {
+            result.textContent = parseFloat(Number(operate(firstNum, operator, secondNum).toFixed(5))) + value;
+            operator = value;
+        }
+        else {
+            result.textContent = operate(firstNum, operator, secondNum);
+        }
     }
+    else if (isEquals) {
 
+        let secondNum = Number(result.textContent.substring((result.textContent.indexOf(operator) + 1)));
+        let firstNum = Number(result.textContent.substring(0, result.textContent.indexOf(operator)));
 
-    if (isClear) {
+        if (typeof (operate(firstNum, operator, secondNum)) == "number") {
+            result.textContent = parseFloat(Number(operate(firstNum, operator, secondNum).toFixed(5)));
+        }
+        else {
+            result.textContent = operate(firstNum, operator, secondNum);
+        }
+    }
+    else if (isClear) {
         result.textContent = "0";
     }
 });
