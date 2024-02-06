@@ -22,6 +22,7 @@ const equals = document.getElementById("equals");
 const result = document.getElementById("result");
 const input = document.getElementById("input");
 
+
 // create calculator functions
 function add(x, y) {
     return x + y;
@@ -49,22 +50,24 @@ function operate(firstNum, operator, secondNum) {
     console.log(`firstNum, operator, secondNum = ${firstNum + operator + secondNum}`);
     console.log(`operator=="+" is ${operator=="+"}`);
 
-    if (operator == "+") {
+    if (operator == addition.textContent) {
         return add(firstNum, secondNum);
     }
-    else if (operator == "-") {
+    else if (operator == subtraction.textContent) {
         return subtract(firstNum, secondNum);
     }
-    else if (operator == "x") {
+    else if (operator == multiplication.textContent) {
         return multiply(firstNum, secondNum);
     }
-    else if (operator == "/") {
+    else if (operator == division.textContent) {
         return divide(firstNum, secondNum);
     }
     else {
         return "Syntax error.";
     }
 };
+
+let checker = addition.textContent || subtraction.textContent || multiplication.textContent || division.textContent;
 
 input.addEventListener('click', function(e) {
     let element = e.target;
@@ -74,11 +77,49 @@ input.addEventListener('click', function(e) {
     let isOperator = (element.id=="addition"||element.id=="subtraction"||element.id=="multiplication"||element.id=="division");
     let isEquals = (element.id=="equals");
     let isClear = (element.id=="clear");
-    console.log(element.id, typeof(element.id));
-    console.log(`isNumber is ${isNumber}`);
-    console.log(`isDecimal is ${isDecimal}`);
-    console.log(`isOperator is ${isOperator}`);
-    console.log(`isEquals is ${isEquals}`);
-    console.log(`isClear is ${isClear}`);
-    result.textContent=element.textContent;
+    // console.log(element.id, typeof(element.id));
+    // console.log(`isNumber is ${isNumber}`);
+    // console.log(`isDecimal is ${isDecimal}`);
+    // console.log(`isOperator is ${isOperator}`);
+    // console.log(`isEquals is ${isEquals}`);
+    // console.log(`isClear is ${isClear}`);
+    
+    let value = element.textContent;
+
+    // console.log(value);
+
+    if ((isNumber || isDecimal) && result.textContent=="0") {
+        result.textContent=value;
+    }
+    else if ((isNumber || isDecimal) && (result.textContent.slice(-1)!=checker)) {
+        result.textContent+=value;
+    }
+    else if ((isNumber || isDecimal) && (result.textContent.slice(-1)==checker)) {
+        result.textContent+=value;
+    }
+
+    if (isOperator && (result.textContent.slice(-1)!=checker)) {
+        result.textContent+=value;
+    }
+    else if (isOperator && (result.textContent.slice(-1)==checker)) {
+        result.textContent.slice(0, -1)+=value;
+    }
+
+
+    // let firstNum=Number(result.textContent.substring((result.textContent.indexOf(operator)+1)));
+    // let secondNum=Number(result.textContent.substring(0, result.textContent.indexOf(operator)));
+    // let operator=result.textContent.charAt(result.textContent.indexOf("×"));
+
+    if (isEquals && !operator) {
+        operate
+    }
+
+    // console.log(firstNum);
+    // console.log(secondNum);
+    // console.log(operator);
+
+
+    if (isClear) {
+        result.textContent="0";
+    }
 });
