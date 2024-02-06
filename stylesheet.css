@@ -1,0 +1,63 @@
+#container {
+    border: solid purple;
+    width: 30%;
+    height: 60vh;
+    margin: auto;
+    padding: 5vh;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    ;
+}
+
+#display {
+    border: solid gray;
+    font-size: 2.5em;
+    text-align: right;
+}
+
+#input {
+    border: solid orange;
+    height: 60vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+#operators {
+    border: solid green;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 25%;
+}
+
+#keypad {
+    border: solid aqua;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 75%;
+
+}
+
+.number {
+    width: 28%;
+    height: 22%;
+    font-size: 1.5em;
+}
+
+.operator {
+width: 84%;
+height: 15%;
+font-size: 1.5em;
+}
+
+#equals {
+    height:30%;
+}
+
+button {
+    padding: 0px;
+    line-height: 0px;
+}
