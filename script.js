@@ -66,7 +66,6 @@ function operate(firstNum, operator, secondNum) {
     }
 };
 
-let checker = addition.textContent || subtraction.textContent || multiplication.textContent || division.textContent;
 
 input.addEventListener('click', function (e) {
     let element = e.target;
@@ -76,6 +75,10 @@ input.addEventListener('click', function (e) {
     let isOperator = (element.id == "addition" || element.id == "subtraction" || element.id == "multiplication" || element.id == "division");
     let isEquals = (element.id == "equals");
     let isClear = (element.id == "clear");
+    let checker = (result.textContent.includes(addition.textContent) || result.textContent.includes(subtraction.textContent) || 
+    result.textContent.includes(multiplication.textContent) || result.textContent.includes(division.textContent));
+    console.log(`checker is ${checker}`);
+
     // console.log(element.id, typeof(element.id));
     // console.log(`isNumber is ${isNumber}`);
     // console.log(`isDecimal is ${isDecimal}`);
@@ -85,25 +88,39 @@ input.addEventListener('click', function (e) {
 
     let value = element.textContent;
 
+    console.log(`${value} was clicked`);
+
     // console.log(value);
 
+    console.log(`result.textContent is ${result.textContent}\nresult.textContent.slice(-1) is ${result.textContent.slice(-1)}`);
+
     if ((isNumber || isDecimal) && result.textContent == "0") {
+        console.log(`(isNumber || isDecimal) : ${(isNumber || isDecimal)}\nresult.textContent == '0' : ${result.textContent == "0"}`);
+        console.log(`((isNumber || isDecimal) && result.textContent == "0") : ${((isNumber || isDecimal) && result.textContent == "0")}`);
         result.textContent = value;
     }
-    else if ((isNumber || isDecimal) && (result.textContent.slice(-1) != checker)) {
+    else if ((isNumber || isDecimal) && !checker) {
+        console.log(`(isNumber || isDecimal) : ${(isNumber || isDecimal)}\n(!checker : ${(!checker)})`);
+        console.log(`((isNumber || isDecimal) && (!checker)) : ${((isNumber || isDecimal) && (!checker))}`);
         result.textContent += value;
     }
-    else if ((isNumber || isDecimal) && (result.textContent.slice(-1) == checker)) {
+    else if ((isNumber || isDecimal) && (checker)) {
+        console.log(`(isNumber || isDecimal) : ${(isNumber || isDecimal)}\n(checker : ${(checker)})`);
+        console.log(`((isNumber || isDecimal) && (checker)) : ${((isNumber || isDecimal) && (checker))}`);
         result.textContent += value;
     }
 
-    if (isOperator && (result.textContent.slice(-1) != checker)) {
+    if (isOperator && (!checker)) {
+        console.log(`isOperator : ${isOperator}\n(!checker : ${(!checker)})`);
+        console.log(`(isOperator && (!checker)) : ${(isOperator && (!checker))}`);
         operator = value;
         result.textContent += value;
     }
-    else if (isOperator && (result.textContent.slice(-1) == checker)) {
+    else if (isOperator && (checker)) {
+        console.log(`isOperator : ${isOperator}\n(checker : ${(checker)})`);
+        console.log(`(isOperator && (checker)) : ${(isOperator && (checker))}`);
         operator = value;
-        result.textContent.slice(0, -1) += value;
+        result.textContent = result.textContent.replace(/.$/,value);
     }
 
 
