@@ -16,6 +16,13 @@
     text-align: right;
 }
 
+button {
+    padding: 0px;
+    line-height: 0px;
+    background-color: black;
+    color: white;
+}
+
 #input {
     border: solid orange;
     height: 60vh;
@@ -55,9 +62,11 @@ font-size: 1.5em;
 
 #equals {
     height:30%;
+    background-color: aqua;
+    color: black;
 }
 
-button {
-    padding: 0px;
-    line-height: 0px;
+#clear {
+    background-color: silver;
+    color: black;
 }
