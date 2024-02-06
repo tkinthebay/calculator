@@ -1,7 +1,4 @@
 // set variables
-// let firstNum = ;
-// let secondNum = ;
-// let operator = ;
 const zero = document.getElementById("zero");
 const one = document.getElementById("one");
 const two = document.getElementById("two");
@@ -21,7 +18,9 @@ const division = document.getElementById("division");
 const equals = document.getElementById("equals");
 const result = document.getElementById("result");
 const input = document.getElementById("input");
-
+let firstNum = 0;
+let secondNum = 0;
+let operator = addition.textContent;
 
 // create calculator functions
 function add(x, y) {
@@ -44,11 +43,11 @@ function divide(x, y) {
 function operate(firstNum, operator, secondNum) {
 
     // test
-    console.log(`firstNum = ${firstNum} : ${typeof (firstNum)}`);
-    console.log(`secondNum = ${secondNum} : ${typeof (secondNum)}`);
-    console.log(`operator = ${operator} : ${typeof (operator)}`);
-    console.log(`firstNum, operator, secondNum = ${firstNum + operator + secondNum}`);
-    console.log(`operator=="+" is ${operator=="+"}`);
+    // console.log(`firstNum = ${firstNum} : ${typeof (firstNum)}`);
+    // console.log(`secondNum = ${secondNum} : ${typeof (secondNum)}`);
+    // console.log(`operator = ${operator} : ${typeof (operator)}`);
+    // console.log(`firstNum, operator, secondNum = ${firstNum + operator + secondNum}`);
+    // console.log(`operator=="+" is ${operator == "+"}`);
 
     if (operator == addition.textContent) {
         return add(firstNum, secondNum);
@@ -69,57 +68,60 @@ function operate(firstNum, operator, secondNum) {
 
 let checker = addition.textContent || subtraction.textContent || multiplication.textContent || division.textContent;
 
-input.addEventListener('click', function(e) {
+input.addEventListener('click', function (e) {
     let element = e.target;
-    let isNumber = (element.id=="zero"||element.id=="one"||element.id=="two"||element.id=="three"||element.id=="four"||
-    element.id=="five"||element.id=="six"||element.id=="seven"||element.id=="eight"||element.id=="nine");
-    let isDecimal = (element.id=="decimal");
-    let isOperator = (element.id=="addition"||element.id=="subtraction"||element.id=="multiplication"||element.id=="division");
-    let isEquals = (element.id=="equals");
-    let isClear = (element.id=="clear");
+    let isNumber = (element.id == "zero" || element.id == "one" || element.id == "two" || element.id == "three" || element.id == "four" ||
+        element.id == "five" || element.id == "six" || element.id == "seven" || element.id == "eight" || element.id == "nine");
+    let isDecimal = (element.id == "decimal");
+    let isOperator = (element.id == "addition" || element.id == "subtraction" || element.id == "multiplication" || element.id == "division");
+    let isEquals = (element.id == "equals");
+    let isClear = (element.id == "clear");
     // console.log(element.id, typeof(element.id));
     // console.log(`isNumber is ${isNumber}`);
     // console.log(`isDecimal is ${isDecimal}`);
     // console.log(`isOperator is ${isOperator}`);
     // console.log(`isEquals is ${isEquals}`);
     // console.log(`isClear is ${isClear}`);
-    
+
     let value = element.textContent;
 
     // console.log(value);
 
-    if ((isNumber || isDecimal) && result.textContent=="0") {
-        result.textContent=value;
+    if ((isNumber || isDecimal) && result.textContent == "0") {
+        result.textContent = value;
     }
-    else if ((isNumber || isDecimal) && (result.textContent.slice(-1)!=checker)) {
-        result.textContent+=value;
+    else if ((isNumber || isDecimal) && (result.textContent.slice(-1) != checker)) {
+        result.textContent += value;
     }
-    else if ((isNumber || isDecimal) && (result.textContent.slice(-1)==checker)) {
-        result.textContent+=value;
-    }
-
-    if (isOperator && (result.textContent.slice(-1)!=checker)) {
-        result.textContent+=value;
-    }
-    else if (isOperator && (result.textContent.slice(-1)==checker)) {
-        result.textContent.slice(0, -1)+=value;
+    else if ((isNumber || isDecimal) && (result.textContent.slice(-1) == checker)) {
+        result.textContent += value;
     }
 
-
-    // let firstNum=Number(result.textContent.substring((result.textContent.indexOf(operator)+1)));
-    // let secondNum=Number(result.textContent.substring(0, result.textContent.indexOf(operator)));
-    // let operator=result.textContent.charAt(result.textContent.indexOf("×"));
-
-    if (isEquals && !operator) {
-        operate
+    if (isOperator && (result.textContent.slice(-1) != checker)) {
+        operator = value;
+        result.textContent += value;
+    }
+    else if (isOperator && (result.textContent.slice(-1) == checker)) {
+        operator = value;
+        result.textContent.slice(0, -1) += value;
     }
 
-    // console.log(firstNum);
-    // console.log(secondNum);
-    // console.log(operator);
+
+    if (isEquals) {
+
+        let secondNum = Number(result.textContent.substring((result.textContent.indexOf(operator) + 1)));
+        let firstNum = Number(result.textContent.substring(0, result.textContent.indexOf(operator)));
+
+        console.log(`firstNum is ${firstNum}`);
+        console.log(`secondNum is ${secondNum}`);
+        console.log(`operator is ${operator}`);
+
+
+        result.textContent = parseFloat(Number(operate(firstNum, operator, secondNum).toFixed(5)));
+    }
 
 
     if (isClear) {
-        result.textContent="0";
+        result.textContent = "0";
     }
 });
