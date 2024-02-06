@@ -20,8 +20,7 @@ const multiplication = document.getElementById("multiplication");
 const division = document.getElementById("division");
 const equals = document.getElementById("equals");
 const result = document.getElementById("result");
-
-
+const input = document.getElementById("input");
 
 // create calculator functions
 function add(x, y) {
@@ -66,3 +65,20 @@ function operate(firstNum, operator, secondNum) {
         return "Syntax error.";
     }
 };
+
+input.addEventListener('click', function(e) {
+    let element = e.target;
+    let isNumber = (element.id=="zero"||element.id=="one"||element.id=="two"||element.id=="three"||element.id=="four"||
+    element.id=="five"||element.id=="six"||element.id=="seven"||element.id=="eight"||element.id=="nine");
+    let isDecimal = (element.id=="decimal");
+    let isOperator = (element.id=="addition"||element.id=="subtraction"||element.id=="multiplication"||element.id=="division");
+    let isEquals = (element.id=="equals");
+    let isClear = (element.id=="clear");
+    console.log(element.id, typeof(element.id));
+    console.log(`isNumber is ${isNumber}`);
+    console.log(`isDecimal is ${isDecimal}`);
+    console.log(`isOperator is ${isOperator}`);
+    console.log(`isEquals is ${isEquals}`);
+    console.log(`isClear is ${isClear}`);
+    result.textContent=element.textContent;
+});
