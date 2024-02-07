@@ -66,6 +66,10 @@ function operate(firstNum, operator, secondNum) {
 
 
 input.addEventListener('click', function (e) {
+    if (result.textContent == "nO dIvIsIoN bY zErO") {
+        result.textContent = "0";
+    }
+
     let element = e.target;
     let isNumber = (element.id == "zero" || element.id == "one" || element.id == "two" || element.id == "three" || element.id == "four" ||
         element.id == "five" || element.id == "six" || element.id == "seven" || element.id == "eight" || element.id == "nine");
@@ -73,29 +77,34 @@ input.addEventListener('click', function (e) {
     let isOperator = (element.id == "addition" || element.id == "subtraction" || element.id == "multiplication" || element.id == "division");
     let isEquals = (element.id == "equals");
     let isClear = (element.id == "clear");
-    let checker = (result.textContent.includes(addition.textContent) || result.textContent.includes(subtraction.textContent) ||
+    let operatorChecker = (result.textContent.includes(addition.textContent) || result.textContent.includes(subtraction.textContent) ||
         result.textContent.includes(multiplication.textContent) || result.textContent.includes(division.textContent));
+    let decimalChecker = ((result.textContent.includes(".") && !operatorChecker)) ||
+        (result.textContent.substring(result.textContent.indexOf(operator) + 1).includes("."));
 
     let value = element.textContent;
 
     if ((isNumber || isDecimal) && result.textContent == "0") {
         result.textContent = value;
     }
-    else if ((isNumber || isDecimal) && !checker) {
+    else if (isDecimal && decimalChecker) {
+        result.textContent;
+    }
+    else if ((isNumber || isDecimal) && !operatorChecker) {
         result.textContent += value;
     }
-    else if ((isNumber || isDecimal) && (checker)) {
+    else if ((isNumber || isDecimal) && (operatorChecker)) {
         result.textContent += value;
     }
-    else if (isOperator && (!checker)) {
+    else if (isOperator && (!operatorChecker)) {
         operator = value;
         result.textContent += value;
     }
-    else if (isOperator && (checker) && result.textContent.slice(-1) == operator) {
+    else if (isOperator && (operatorChecker) && result.textContent.slice(-1) == operator) {
         operator = value;
         result.textContent = result.textContent.replace(/.$/, value);
     }
-    else if (isOperator && (checker)) {
+    else if (isOperator && (operatorChecker)) {
 
         let secondNum = Number(result.textContent.substring((result.textContent.indexOf(operator) + 1)));
         let firstNum = Number(result.textContent.substring(0, result.textContent.indexOf(operator)));
